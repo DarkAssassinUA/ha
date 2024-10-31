@@ -45,7 +45,7 @@ action:
           - service: mqtt.publish
             data:
               qos: "1"
-              payload: |-
+              payload: >
                 {
                   "text": "{{ states(!input.sensor_entity) }}",
                   "color": "{{ !input.text_color }}",
@@ -62,7 +62,7 @@ action:
           - service: mqtt.publish
             data:
               qos: "1"
-              payload: |-
+              payload: >
                 {
                   "text": "{{ states(!input.sensor_entity) }}",
                   "color": "{{ !input.text_color }}",
