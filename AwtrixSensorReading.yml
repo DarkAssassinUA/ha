@@ -1,79 +1,79 @@
 blueprint:
-  name: Публикация состояния Telega Sensor
-  description: Публикация состояния сенсора в MQTT с настройками
-  domain: automation
+  name: Публикация состояния Telega Sensor  # Название Blueprint
+  description: Публикация состояния сенсора в MQTT с настройками  # Описание функциональности
+  domain: automation  # Указывает, что это автоматизация
   input:
-    sensor_entity:
-      name: Сенсор
-      description: Выберите сенсор для отслеживания
+    sensor_entity:  # Параметр для выбора сенсора
+      name: Сенсор  # Отображаемое имя
+      description: Выберите сенсор для отслеживания  # Описание, что нужно выбрать
       selector:
         entity:
-          domain: sensor
-    mqtt_topic:
-      name: MQTT Топик
-      description: Укажите топик для публикации
-      default: "Awtrix/custom/parser_telega"
-    text_color:
-      name: Цвет текста
-      description: Укажите цвет текста в формате HEX
-      default: "#FF0000"
-    text_repeat:
-      name: Количество повторений
-      description: Укажите количество повторений текста
-      default: 1
-    text_align:
-      name: Выравнивание текста
-      description: Выберите выравнивание текста
-      default: "left"
+          domain: sensor  # Ограничение для выбора только сенсоров
+    mqtt_topic:  # Параметр для указания топика MQTT
+      name: MQTT Топик  # Отображаемое имя
+      description: Укажите топик для публикации  # Описание
+      default: "Awtrix/custom/parser_telega"  # Значение по умолчанию
+    text_color:  # Параметр для выбора цвета текста
+      name: Цвет текста  # Отображаемое имя
+      description: Укажите цвет текста в формате HEX  # Описание
+      default: "#FF0000"  # Значение по умолчанию
+    text_repeat:  # Параметр для указания количества повторений
+      name: Количество повторений  # Отображаемое имя
+      description: Укажите количество повторений текста  # Описание
+      default: 1  # Значение по умолчанию
+    text_align:  # Параметр для выбора выравнивания текста
+      name: Выравнивание текста  # Отображаемое имя
+      description: Выберите выравнивание текста  # Описание
+      default: "left"  # Значение по умолчанию
       selector:
         select:
-          options:
-            - left
-            - center
-            - right
+          options:  # Доступные варианты выравнивания текста
+            - left  # Выравнивание по левому краю
+            - center  # Центрирование текста
+            - right  # Выравнивание по правому краю
 
 trigger:
-  - platform: state
-    entity_id: !input sensor_entity
+  - platform: state  # Триггер, срабатывающий при изменении состояния
+    entity_id: !input sensor_entity  # Использование выбранного сенсора
 
 action:
-  - choose:
+  - choose:  # Выбор действия на основе условий
       - conditions:
-          - condition: template
-            value_template: "{{ states(!input.sensor_entity) | length < 8 }}"
-        sequence:
-          - service: mqtt.publish
+          - condition: template  # Условие проверки длины текста
+            value_template: "{{ states(!input.sensor_entity) | length < 8 }}"  # Проверка длины текста
+        sequence:  # Действие, если длина текста меньше 8
+          - service: mqtt.publish  # Вызов сервиса публикации в MQTT
             data:
-              qos: "1"
-              payload: >
+              qos: "1"  # Установка качества обслуживания
+              payload: >  # Многострочный текст в формате JSON
                 {
-                  "text": "{{ states(!input.sensor_entity) }}",
-                  "color": "{{ !input.text_color }}",
-                  "repeat": {{ !input.text_repeat }},
-                  "pushIcon": 0,
-                  "textCase": 0,
-                  "textAlign": "center"
+                  "text": "{{ states(!input.sensor_entity) }}",  # Получение текста из сенсора
+                  "color": "{{ !input.text_color }}",  # Использование выбранного цвета текста
+                  "repeat": {{ !input.text_repeat }},  # Использование количества повторений
+                  "pushIcon": 0,  # Значение иконки
+                  "textCase": 0,  # Формат текста
+                  "textAlign": "center"  # Центрирование текста
                 }
-              topic: !input mqtt_topic
+              topic: !input mqtt_topic  # Использование выбранного топика MQTT
       - conditions:
-          - condition: template
-            value_template: "{{ states(!input.sensor_entity) | length >= 8 }}"
-        sequence:
-          - service: mqtt.publish
+          - condition: template  # Условие проверки длины текста
+            value_template: "{{ states(!input.sensor_entity) | length >= 8 }}"  # Проверка длины текста
+        sequence:  # Действие, если длина текста 8 символов или больше
+          - service: mqtt.publish  # Вызов сервиса публикации в MQTT
             data:
-              qos: "1"
-              payload: >
+              qos: "1"  # Установка качества обслуживания
+              payload: >  # Многострочный текст в формате JSON
                 {
-                  "text": "{{ states(!input.sensor_entity) }}",
-                  "color": "{{ !input.text_color }}",
-                  "repeat": {{ !input.text_repeat }},
-                  "pushIcon": 0,
-                  "textCase": 0
+                  "text": "{{ states(!input.sensor_entity) }}",  # Получение текста из сенсора
+                  "color": "{{ !input.text_color }}",  # Использование выбранного цвета текста
+                  "repeat": {{ !input.text_repeat }},  # Использование количества повторений
+                  "pushIcon": 0,  # Значение иконки
+                  "textCase": 0  # Формат текста
                 }
-              topic: !input mqtt_topic
-  - delay: '00:00:01'  # Короткая задержка перед удалением (1 секунда)
-  - service: mqtt.publish
+              topic: !input mqtt_topic  # Использование выбранного топика MQTT
+  - delay: '00:00:01'  # Задержка 1 секунда перед удалением сообщения
+  - service: mqtt.publish  # Публикация пустого сообщения для удаления
     data:
-      qos: "1"
-      payload: ""
-      topic: !input mqtt_topic
+      qos: "1"  # Установка качества обслуживания
+      payload: ""  # Пустое сообщение
+      topic: !input mqtt_topic  # Использование выбранного топика MQTT
