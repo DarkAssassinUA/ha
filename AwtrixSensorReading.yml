@@ -52,7 +52,7 @@ action:
                   "repeat": {{ !input.text_repeat }},
                   "pushIcon": 0,
                   "textCase": 0,
-                  "textAlign": "{{ !input.text_align }}"
+                  "textAlign": "center"
                 }
               topic: !input mqtt_topic
       - conditions:
