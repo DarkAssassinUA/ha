@@ -34,7 +34,9 @@ blueprint:
       default: [0, 0, 0]  # Черный по умолчанию
 
 trigger:
-  - platform: manual
+  - platform: state
+    entity_id: input_boolean.first_run_triggered
+    to: 'off'
 
 action:
   - delay: '00:00:01'  # Ждем 1 секунду
@@ -47,3 +49,5 @@ action:
           "CBCOL": "{{ color_2 }}",
           "CTCOL": "{{ color_3 }}"
         }
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.first_run_triggered
