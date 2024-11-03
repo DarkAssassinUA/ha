@@ -1,0 +1,36 @@
+blueprint:
+  name: AWTRIX Calendar Color Configuration
+  description: Configure colors for AWTRIX calendar display.
+  domain: automation
+  input:
+    mqtt_topic:
+      name: MQTT Topic
+      description: Topic to publish the colors.
+      selector:
+        text: {}
+    header_color:
+      name: Calendar Header Color
+      description: Select a color for the calendar header.
+      selector:
+        color: {}
+    body_color:
+      name: Calendar Body Color
+      description: Select a color for the calendar body.
+      selector:
+        color: {}
+    text_color:
+      name: Calendar Text Color
+      description: Select a color for the calendar text.
+      selector:
+        color: {}
+
+action:
+  - service: mqtt.publish
+    data:
+      topic: "{{ mqtt_topic }}"
+      payload: >
+        {
+          "CHCOL": "{{ header_color }}",
+          "CBCOL": "{{ body_color }}",
+          "CTCOL": "{{ text_color }}"
+        }
