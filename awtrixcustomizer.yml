@@ -38,8 +38,11 @@ blueprint:
       default: [0, 0, 0]  # Черный по умолчанию
 
 trigger:
-  - platform: homeassistant
-    event: start
+  - platform: event
+    event_type: call_service
+    event_data:
+      domain: automation
+      service: trigger_automation
 
 condition: []
 action:
