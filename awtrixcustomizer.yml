@@ -8,21 +8,21 @@ blueprint:
       description: Topic to publish the colors.
       selector:
         text: {}
-    header_color:
-      name: Calendar Header Color
-      description: Color setting for the calendar header.
+    color_1:
+      name: Color 1
+      description: Color setting for the first element.
       selector:
         color_rgb: {}
       default: [255, 0, 0]  # Красный по умолчанию
-    body_color:
-      name: Calendar Body Color
-      description: Color setting for the calendar body.
+    color_2:
+      name: Color 2
+      description: Color setting for the second element.
       selector:
         color_rgb: {}
       default: [255, 255, 255]  # Белый по умолчанию
-    text_color:
-      name: Calendar Text Color
-      description: Color setting for the calendar text.
+    color_3:
+      name: Color 3
+      description: Color setting for the third element.
       selector:
         color_rgb: {}
       default: [0, 0, 0]  # Черный по умолчанию
@@ -33,7 +33,7 @@ action:
       topic: "{{ mqtt_topic }}"
       payload: >
         {
-          "CHCOL": "{{ header_color }}",
-          "CBCOL": "{{ body_color }}",
-          "CTCOL": "{{ text_color }}"
+          "CHCOL": "{{ color_1 }}",
+          "CBCOL": "{{ color_2 }}",
+          "CTCOL": "{{ color_3 }}"
         }
