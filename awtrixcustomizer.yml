@@ -34,9 +34,12 @@ blueprint:
       default: [0, 0, 0]  # Черный по умолчанию
 
 trigger:
-  - platform: state
-    entity_id: input_boolean.first_run_triggered
-    to: 'off'
+  - platform: event
+    event_type: call_service
+    event_data:
+      service: automation.trigger
+      service_data:
+        entity_id: automation.awtrix_calendar_color_configuration
 
 action:
   - delay: '00:00:01'  # Ждем 1 секунду
@@ -49,5 +52,3 @@ action:
           "CBCOL": "{{ color_2 }}",
           "CTCOL": "{{ color_3 }}"
         }
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.first_run_triggered
