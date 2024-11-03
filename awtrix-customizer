@@ -1,0 +1,38 @@
+blueprint:
+  name: AWTRIX Calendar Color Configuration
+  description: Configure colors for AWTRIX calendar display.
+  domain: automation
+  input:
+    header_color:
+      name: Calendar Header Color
+      description: Hex color code for the calendar header.
+      selector:
+        text:
+          placeholder: "#FF0000"
+    body_color:
+      name: Calendar Body Color
+      description: Hex color code for the calendar body.
+      selector:
+        text:
+          placeholder: "#FFFFFF"
+    text_color:
+      name: Calendar Text Color
+      description: Hex color code for the calendar text.
+      selector:
+        text:
+          placeholder: "#000000"
+
+trigger:
+  - platform: state
+    entity_id: sensor.some_sensor
+
+action:
+  - service: mqtt.publish
+    data:
+      topic: "your/mqtt/topic"
+      payload: >
+        {
+          "CHCOL": "{{ header_color }}",
+          "CBCOL": "{{ body_color }}",
+          "CTCOL": "{{ text_color }}"
+        }
