@@ -3,19 +3,9 @@ blueprint:
   description: Configure colors for AWTRIX calendar display.
   domain: automation
   input:
-    selected_device:
-      name: Select Device
-      description: Choose the AWTRIX device to send colors.
-      selector:
-        device:
-          filter:
-            - integration: mqtt
-              manufacturer: Blueforcer
-              model: AWTRIX 3
-          multiple: true
     mqtt_topic:
       name: MQTT Topic
-      description: Specify the MQTT topic for settings.
+      description: Enter the MQTT topic for AWTRIX settings.
       selector:
         text: {}
     color_1:
@@ -42,13 +32,14 @@ trigger:
     event_type: call_service
     event_data:
       domain: automation
-      service: trigger_automation
+      service: trigger
+      service_data:
+        entity_id: automation.awtrix_calendar_color_configuration  # Замените на ID вашей автоматизации
 
-condition: []
 action:
   - service: mqtt.publish
     data:
-      topic: "{{ mqtt_topic }}/settings"
+      topic: "{{ mqtt_topic }}"
       payload: >
         {
           "CHCOL": "{{ color_1 }}",
