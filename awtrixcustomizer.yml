@@ -38,12 +38,7 @@ blueprint:
       default: [0, 0, 0]  # Черный по умолчанию
 
 trigger:
-  - platform: event
-    event_type: call_service
-    event_data:
-      service: automation.trigger
-      service_data:
-        entity_id: this
+  - platform: manual
 
 action:
   - delay: '00:00:01'  # Ждем 1 секунду
