@@ -7,20 +7,17 @@ blueprint:
       name: Calendar Header Color
       description: Hex color code for the calendar header.
       selector:
-        text:
-          placeholder: "#FF0000"
+        text: {}
     body_color:
       name: Calendar Body Color
       description: Hex color code for the calendar body.
       selector:
-        text:
-          placeholder: "#FFFFFF"
+        text: {}
     text_color:
       name: Calendar Text Color
       description: Hex color code for the calendar text.
       selector:
-        text:
-          placeholder: "#000000"
+        text: {}
 
 trigger:
   - platform: state
