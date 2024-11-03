@@ -34,15 +34,9 @@ blueprint:
       default: [0, 0, 0]  # Черный по умолчанию
 
 trigger:
-  - platform: event
-    event_type: call_service
-    event_data:
-      service: automation.trigger
-      service_data:
-        entity_id: automation.awtrix_calendar_color_configuration
+  - platform: manual
 
 action:
-  - delay: '00:00:01'  # Ждем 1 секунду
   - service: mqtt.publish
     data:
       topic: "/{{ selected_device | map(attribute='name') | join(', ') }}/settings"
