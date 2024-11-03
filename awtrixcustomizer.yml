@@ -10,19 +10,22 @@ blueprint:
         text: {}
     header_color:
       name: Calendar Header Color
-      description: Select a color for the calendar header.
+      description: Color setting for the calendar header.
       selector:
         color_rgb: {}
+      default: [255, 0, 0]  # Красный по умолчанию
     body_color:
       name: Calendar Body Color
-      description: Select a color for the calendar body.
+      description: Color setting for the calendar body.
       selector:
         color_rgb: {}
+      default: [255, 255, 255]  # Белый по умолчанию
     text_color:
       name: Calendar Text Color
-      description: Select a color for the calendar text.
+      description: Color setting for the calendar text.
       selector:
         color_rgb: {}
+      default: [0, 0, 0]  # Черный по умолчанию
 
 action:
   - service: mqtt.publish
