@@ -8,6 +8,16 @@ blueprint:
       description: Topic to publish the colors.
       selector:
         text: {}
+    selected_device:
+      name: Select Device
+      description: Choose the AWTRIX device to send colors.
+      selector:
+        device:
+          filter:
+            - integration: mqtt
+              manufacturer: Blueforcer
+              model: AWTRIX 3
+          multiple: true
     color_1:
       name: Color 1
       description: Color setting for the first element.
