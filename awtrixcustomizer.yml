@@ -3,9 +3,9 @@ blueprint:
   description: Configure colors for AWTRIX calendar display.
   domain: automation
   input:
-    awtrix:
-      name: AWTRIX 3
-      description: Select the Awtrix light
+    selected_device:
+      name: Select Device
+      description: Choose the AWTRIX device to send colors.
       selector:
         device:
           filter:
@@ -37,7 +37,12 @@ blueprint:
         color_rgb: {}
       default: [0, 0, 0]  # Черный по умолчанию
 
+trigger:
+  - platform: homeassistant
+    event: start
+
 action:
+  - delay: '00:00:01'  # Ждем 1 секунду
   - service: mqtt.publish
     data:
       topic: "{{ mqtt_topic }}"
