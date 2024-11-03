@@ -5,7 +5,7 @@ blueprint:
   input:
     mqtt_topic:
       name: MQTT Topic
-      description: Enter the MQTT topic for AWTRIX settings.
+      description: Enter the MQTT topic for AWTRIX settings. This field cannot be empty.
       selector:
         text: {}
     color_1:
@@ -35,6 +35,10 @@ trigger:
       service: trigger
       service_data:
         entity_id: automation.awtrix_calendar_color_configuration  # Замените на ID вашей автоматизации
+
+condition:
+  - condition: template
+    value_template: "{{ mqtt_topic != '' }}"
 
 action:
   - service: mqtt.publish
