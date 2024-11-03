@@ -3,9 +3,9 @@ blueprint:
   description: Configure colors for AWTRIX calendar display.
   domain: automation
   input:
-    selected_device:
-      name: Select Device
-      description: Choose the AWTRIX device to send colors.
+    awtrix:
+      name: AWTRIX 3
+      description: Select the Awtrix light
       selector:
         device:
           filter:
