@@ -38,8 +38,10 @@ blueprint:
       default: [0, 0, 0]  # Черный по умолчанию
 
 trigger:
-  - platform: manual
+  - platform: homeassistant
+    event: start
 
+condition: []
 action:
   - service: mqtt.publish
     data:
